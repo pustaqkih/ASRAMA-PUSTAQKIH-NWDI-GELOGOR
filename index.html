@@ -289,6 +289,7 @@
             <li><a href="#fasilitas">Fasilitas</a></li>
             <li><a href="#galeri">Galeri</a></li>
             <li><a href="#kontak">Kontak</a></li>
+            <li><a href="berita.html">Berita</a></li>
         </ul>
     </nav>
     
@@ -310,7 +311,7 @@
             <h2 class="section-title">Program Pendidikan</h2>
             <div class="card-container">
                 <div class="card">
-                    <img src="images/tahfidz.jpg" alt="Program Tahfidz">
+                    <img src="tahfidz.jpg" alt="Program Tahfidz">
                     <div class="card-content">
                         <h3>Program Tahfidz Al-Qur'an</h3>
                         <p>Program khusus menghafal Al-Qur'an dengan metode yang efektif dan bimbingan dari Dr.Ustadz Abdul Rasyid Ridho.Ma. yang berpengalaman.</p>
@@ -393,25 +394,6 @@
                     <div class="gallery-caption">Kegiatan Serah Terima Santri Baru</div>
                 </div>
             </div>
-            
-            <!-- Form Upload Foto (untuk admin) -->
-            <div class="upload-form">
-                <h3>Tambahkan Foto ke Galeri</h3>
-                <form id="uploadForm" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="photo">Pilih Foto:</label>
-                        <input type="file" id="photo" name="photo" accept="image/*" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="caption">Keterangan Foto:</label>
-                        <input type="text" id="caption" name="caption" required>
-                    </div>
-                    <button type="submit" class="btn">Upload Foto</button>
-                </form>
-            </div>
-        </section>
-    </div>
-    
     <footer id="kontak">
         <h2>Hubungi Kami</h2>
         <div class="contact-info">
@@ -423,41 +405,3 @@
         </div>
         <p>&copy; 2023 ASRAMA PUSTAQKIH NWDI GELOGOR. Semua Hak Dilindungi.</p>
     </footer>
-
-    <script>
-        // Script untuk upload foto (contoh sederhana)
-        document.getElementById('uploadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Di sini biasanya ada kode untuk mengupload file ke server
-            // Ini hanya contoh tampilan saja
-            const photoInput = document.getElementById('photo');
-            const captionInput = document.getElementById('caption');
-            
-            if (photoInput.files.length > 0) {
-                const file = photoInput.files[0];
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const gallery = document.querySelector('.gallery');
-                    const newItem = document.createElement('div');
-                    newItem.className = 'gallery-item';
-                    newItem.innerHTML = `
-                        <img src="${e.target.result}" alt="${captionInput.value}">
-                        <div class="gallery-caption">${captionInput.value}</div>
-                    `;
-                    gallery.appendChild(newItem);
-                    
-                    // Reset form
-                    photoInput.value = '';
-                    captionInput.value = '';
-                    
-                    alert('Foto berhasil ditambahkan ke galeri!');
-                };
-                
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
-</body>
-</html>

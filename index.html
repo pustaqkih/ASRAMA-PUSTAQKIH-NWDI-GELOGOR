@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASRAMA PUSTAQKIH NWDI GELOGOR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #2c786c;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #004445;
+            padding: 0.5rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: #2c786c;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            width: 100%;
+            padding: 2rem;
+            background-color: rgba(0,0,0,0.5);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c786c;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #2c786c;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-content h3 {
+            margin-bottom: 1rem;
+            color: #2c786c;
+        }
+        
+        /* Galeri Foto */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Upload Form */
+        .upload-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            background-color: #2c786c;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #004445;
+        }
+        
+        footer {
+            background-color: #004445;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .contact-info {
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .hero {
+                height: 300px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ASRAMA PUSTAQKIH NWDI GELOGOR</h1>
+        <p>Mencetak Generasi Qur'ani yang Berakhlak Mulia</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#beranda">Beranda</a></li>
+            <li><a href="#profil">Profil</a></li>
+            <li><a href="#program">Program Pendidikan</a></li>
+            <li><a href="#fasilitas">Fasilitas</a></li>
+            <li><a href="#galeri">Galeri</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+        </ul>
+    </nav>
+    
+    <div class="hero">
+        <img src="logo.jpeg" width="110px" alt="Asrama Pustaka NIH NWDI Gelogor" class="hero-image">
+        <div class="hero-content">
+            <h1>Selamat Datang di ASRAMA PUSTAQKIH NWDI GELOGOR</h1>
+            <p>Pendidikan Islam Terpadu untuk Masa Depan yang Gemilang</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <section id="profil" class="section">
+            <h2 class="section-title">Profil Pesantren</h2>
+            <p>ASRAMA PUSTAQKIH NWDI GELOGOR didirikan pada tahun 2014 dengan tujuan mencetak generasi muslim yang berilmu, berakhlak mulia, dan mandiri. Kami menggabungkan pendidikan agama dengan kurikulum nasional untuk menciptakan keseimbangan antara ilmu dunia dan akhirat.</p>
+        </section>
+        
+        <section id="program" class="section">
+            <h2 class="section-title">Program Pendidikan</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="images/tahfidz.jpg" alt="Program Tahfidz">
+                    <div class="card-content">
+                        <h3>Program Tahfidz Al-Qur'an</h3>
+                        <p>Program khusus menghafal Al-Qur'an dengan metode yang efektif dan bimbingan dari Dr.Ustadz Abdul Rasyid Ridho.Ma. yang berpengalaman.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="images/diniyah.jpg" alt="Pendidikan Diniyah">
+                    <div class="card-content">
+                        <h3>Pendidikan Diniyah</h3>
+                        <p>Mempelajari ilmu-ilmu agama Islam secara mendalam meliputi fiqh, hadits, aqidah, akhlak, dan bahasa Arab.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="images/formal.jpg" alt="Pendidikan Formal">
+                    <div class="card-content">
+                        <h3>Pendidikan Formal</h3>
+                        <p>Jenjang pendidikan formal setara SD, SMP, dan SMA dengan kurikulum nasional yang terintegrasi dengan nilai-nilai Islam.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="fasilitas" class="section">
+            <h2 class="section-title">Fasilitas Pesantren</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="images/asrama.jpg" alt="Asrama">
+                    <div class="card-content">
+                        <h3>Asrama Nyaman</h3>
+                        <p>Asrama putra dan putri terpisah dengan pengawasan ustadz/ustadzah berpengalaman.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="images/aula.jpg" alt="Aula Pustaqkih">
+                    <div class="card-content">
+                        <h3>Aula Pustaqkih</h3>
+                        <p>Tempat Para Santri Untuk Sholat Dan Mengaji</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="images/lapangan.jpg" alt="Lapangan Olahraga">
+                    <div class="card-content">
+                        <h3>Lapangan Olahraga</h3>
+                        <p>Fasilitas olahraga lengkap untuk menjaga kesehatan dan kebugaran santri.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="galeri" class="section">
+            <h2 class="section-title">Galeri Kegiatan</h2>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="tahfidz.jpg" alt="Kegiatan Storan Hafalan">
+                    <div class="gallery-caption">Kegiatan Storan Hafalan di Aula Putih</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="kajian.jpg" alt="kajian Ba'da Ashar">
+                    <div class="gallery-caption">kajian Ba'da Ashar</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="subuh.jpg" alt="kajian Subuh">
+                    <div class="gallery-caption">kajian Subuh</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Pengajian Umum.jpg" alt="Pengajian Umum">
+                    <div class="gallery-caption">Pengajian Umum</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="pengajian.JPG" alt="Hafalan Qur'an">
+                    <div class="gallery-caption">Sesi Hafalan Qur'an</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="serah_terima.JPG" alt="Kegiatan Serah Terima Santri Baru">
+                    <div class="gallery-caption">Kegiatan Serah Terima Santri Baru</div>
+                </div>
+            </div>
+            
+            <!-- Form Upload Foto (untuk admin) -->
+            <div class="upload-form">
+                <h3>Tambahkan Foto ke Galeri</h3>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="photo">Pilih Foto:</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="caption">Keterangan Foto:</label>
+                        <input type="text" id="caption" name="caption" required>
+                    </div>
+                    <button type="submit" class="btn">Upload Foto</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    
+    <footer id="kontak">
+        <h2>Hubungi Kami</h2>
+        <div class="contact-info">
+            <p>ASRAMA PUSTAQKIH NWDI GELOGOR</p>
+            <p>Jl. Tgh Abdul Karim Gelogor Tengah</p>
+            <p>Kabupaten Lombok Barat</p>
+            <p>Telepon: (0370) 1234567</p>
+            <p>Email: info@pustaqkih.sch.id</p>
+        </div>
+        <p>&copy; 2023 ASRAMA PUSTAQKIH NWDI GELOGOR. Semua Hak Dilindungi.</p>
+    </footer>
+
+    <script>
+        // Script untuk upload foto (contoh sederhana)
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Di sini biasanya ada kode untuk mengupload file ke server
+            // Ini hanya contoh tampilan saja
+            const photoInput = document.getElementById('photo');
+            const captionInput = document.getElementById('caption');
+            
+            if (photoInput.files.length > 0) {
+                const file = photoInput.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const gallery = document.querySelector('.gallery');
+                    const newItem = document.createElement('div');
+                    newItem.className = 'gallery-item';
+                    newItem.innerHTML = `
+                        <img src="${e.target.result}" alt="${captionInput.value}">
+                        <div class="gallery-caption">${captionInput.value}</div>
+                    `;
+                    gallery.appendChild(newItem);
+                    
+                    // Reset form
+                    photoInput.value = '';
+                    captionInput.value = '';
+                    
+                    alert('Foto berhasil ditambahkan ke galeri!');
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

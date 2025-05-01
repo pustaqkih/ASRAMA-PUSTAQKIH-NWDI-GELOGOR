@@ -410,7 +410,7 @@
         
         // Variabel Global
         let isLoggedIn = false;
-        let currentNews = [...sampleNews];
+        let currentNews = JSON.parse(localStorage.getItem('asramaNews')) || [...sampleNews];
         
         // Inisialisasi Elemen
         const adminPanel = document.getElementById('adminPanel');
@@ -424,6 +424,11 @@
         const passwordInput = document.getElementById('password');
         const loginError = document.getElementById('loginError');
         const closeButtons = document.querySelectorAll('.close');
+        
+        // Fungsi untuk menyimpan ke localStorage
+        function saveNewsToStorage() {
+            localStorage.setItem('asramaNews', JSON.stringify(currentNews));
+        }
         
         // Fungsi untuk Render Berita
         function renderNews() {
@@ -467,6 +472,7 @@
         function handleDeleteNews(id) {
             if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
                 currentNews = currentNews.filter(item => item.id !== id);
+                saveNewsToStorage();
                 renderNews();
                 alert('Berita berhasil dihapus!');
             }
@@ -474,6 +480,12 @@
         
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
+            // Load data dari localStorage jika ada
+            const storedNews = localStorage.getItem('asramaNews');
+            if (storedNews) {
+                currentNews = JSON.parse(storedNews);
+            }
+            
             renderNews();
             
             // Login Admin
@@ -509,14 +521,13 @@
                 }
                 
                 if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                    // Login berhasil
                     isLoggedIn = true;
                     adminPanel.style.display = 'block';
                     loginModal.style.display = 'none';
                     usernameInput.value = '';
                     passwordInput.value = '';
                     loginError.style.display = 'none';
-                    renderNews(); // Render ulang untuk menampilkan tombol hapus
+                    renderNews();
                     alert('Login berhasil! Sekarang Anda dapat mengelola berita.');
                 } else {
                     showError('Username atau password salah!');
@@ -539,10 +550,8 @@
                     return;
                 }
                 
-                // Membuat excerpt dari 100 karakter pertama
                 const excerpt = isi.substring(0, 100) + (isi.length > 100 ? '...' : '');
                 
-                // Membaca gambar sebagai URL
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const newNews = {
@@ -555,15 +564,10 @@
                         content: isi
                     };
                     
-                    // Tambahkan berita baru ke awal array
                     currentNews.unshift(newNews);
-                    
-                    // Render ulang berita
+                    saveNewsToStorage();
                     renderNews();
-                    
-                    // Reset form
                     beritaForm.reset();
-                    
                     alert('Berita berhasil ditambahkan!');
                 };
                 reader.readAsDataURL(gambar);
@@ -576,13 +580,11 @@
             
             // Event Delegation untuk Baca Selengkapnya dan Hapus
             blogContainer.addEventListener('click', function(e) {
-                // Hapus Berita
                 if (e.target.classList.contains('btn-delete')) {
                     const id = parseInt(e.target.getAttribute('data-id'));
                     handleDeleteNews(id);
                 }
                 
-                // Baca Selengkapnya
                 if (e.target.classList.contains('read-more')) {
                     e.preventDefault();
                     const id = parseInt(e.target.getAttribute('data-id'));

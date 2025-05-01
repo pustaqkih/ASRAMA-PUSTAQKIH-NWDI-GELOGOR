@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASRAMA PUSTAQKIH NWDI GELOGOR - Berita</title>
+    <title>ASRAMA PUSTAQKIH NWDI GELOGOR</title>
     <style>
-        /* Gaya Dasar */
         * {
             margin: 0;
             padding: 0;
@@ -19,10 +18,10 @@
             line-height: 1.6;
         }
         
-        /* Header dan Navigasi */
         header {
-            background-color: rgb(234, 236, 234);
-            padding: 20px;
+            background-color: #2c786c;
+            color: white;
+            padding: 1rem 0;
             text-align: center;
         }
         
@@ -59,6 +58,42 @@
             padding: 2rem;
         }
         
+        .hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            width: 100%;
+            padding: 2rem;
+            background-color: rgba(0,0,0,0.5);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
         .section {
             margin-bottom: 3rem;
         }
@@ -82,15 +117,13 @@
             background-color: #2c786c;
         }
         
-        /* Gaya untuk Blog Berita */
-        .blog-container {
+        .card-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
         }
         
-        .blog-card {
+        .card {
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
@@ -98,73 +131,80 @@
             transition: transform 0.3s;
         }
         
-        .blog-card:hover {
+        .card:hover {
             transform: translateY(-5px);
         }
         
-        .blog-image {
+        .card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: transform 0.3s;
         }
         
-        .blog-content {
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .card-content {
             padding: 1.5rem;
         }
         
-        .blog-date {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .blog-title {
-            font-size: 1.2rem;
+        .card-content h3 {
             margin-bottom: 1rem;
             color: #2c786c;
         }
         
-        .blog-excerpt {
-            margin-bottom: 1rem;
-            color: #555;
+        /* Galeri Foto */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
         }
         
-        .read-more {
-            display: inline-block;
-            color: #2c786c;
-            font-weight: bold;
-            text-decoration: none;
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .read-more:hover {
-            text-decoration: underline;
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
         }
         
-        .btn-delete {
-            background-color: #e74c3c;
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
             color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            transition: background-color 0.3s;
-            display: block;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
         }
         
-        .btn-delete:hover {
-            background-color: #c0392b;
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
         }
         
-        /* Gaya untuk Form Admin */
-        .admin-panel {
+        /* Upload Form */
+        .upload-form {
             background-color: white;
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 3rem;
-            display: none; /* Awalnya tersembunyi */
+            margin-top: 2rem;
         }
         
         .form-group {
@@ -177,20 +217,11 @@
             font-weight: 600;
         }
         
-        .form-group input[type="text"],
-        .form-group input[type="date"],
-        .form-group textarea,
-        .form-group select {
+        .form-group input[type="file"] {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.5rem;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
         }
         
         .btn {
@@ -208,66 +239,18 @@
             background-color: #004445;
         }
         
-        .btn-secondary {
-            background-color: #6c757d;
+        footer {
+            background-color: #004445;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
         }
         
-        .btn-secondary:hover {
-            background-color: #5a6268;
+        .contact-info {
+            margin-top: 1rem;
         }
         
-        .btn-container {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        /* Modal Login */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            overflow: auto;
-        }
-        
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 25px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            position: relative;
-        }
-        
-        .close {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .close:hover {
-            color: #333;
-        }
-        
-        .error-message {
-            color: #e74c3c;
-            margin-top: 5px;
-            font-size: 14px;
-            display: none;
-        }
-        
-        /* Responsif */
         @media (max-width: 768px) {
             nav ul {
                 flex-direction: column;
@@ -278,321 +261,79 @@
                 margin: 0.5rem 0;
             }
             
-            .blog-container {
-                grid-template-columns: 1fr;
+            .hero {
+                height: 300px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <img src="422.png" width="220px" alt="Logo Asrama Pustakih NWDI Gelogor">
+    <header style="background-color: rgb(234, 236, 234); padding: 20px; text-align: center;">
+        <img src="422.png" width="220px" alt="Deskripsi Gambar"
     </header>
+</header>
     
-    <!-- Navigasi -->
     <nav>
         <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="#" id="adminLoginBtn">Login Admin</a></li>
+            <li><a href="#beranda">Beranda</a></li>
+            <li><a href="#profil">Profil</a></li>
+            <li><a href="#program">Program Pendidikan</a></li>
+            <li><a href="galeri.html">Galeri</a></li>
+            <li><a href="berita.html">Berita</a></li>
+            <li><a href="#kontak">Kontak</a></li>
         </ul>
     </nav>
-
-    <!-- Konten Utama -->
-    <div class="container">
-        <section class="section">
-            <h1 class="section-title">Berita Terkini</h1>
-            
-            <!-- Panel Admin (Hanya muncul setelah login) -->
-            <div id="adminPanel" class="admin-panel">
-                <h3>Kelola Berita</h3>
-                <form id="beritaForm">
-                    <div class="form-group">
-                        <label for="judulBerita">Judul Berita</label>
-                        <input type="text" id="judulBerita" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="tanggalBerita">Tanggal Publikasi</label>
-                        <input type="date" id="tanggalBerita" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="kategoriBerita">Kategori</label>
-                        <select id="kategoriBerita">
-                            <option value="kegiatan">Kegiatan</option>
-                            <option value="pengumuman">Pengumuman</option>
-                            <option value="prestasi">Prestasi</option>
-                            <option value="lainnya">Lainnya</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="gambarBerita">Gambar Utama</label>
-                        <input type="file" id="gambarBerita" accept="image/*" required>
-                        <small>Ukuran maksimal 2MB, format JPG/PNG</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="isiBerita">Isi Berita</label>
-                        <textarea id="isiBerita" required></textarea>
-                    </div>
-                    
-                    <div class="btn-container">
-                        <button type="submit" class="btn">Simpan Berita</button>
-                        <button type="button" id="batalBerita" class="btn btn-secondary">Batal</button>
-                    </div>
-                </form>
-            </div>
-            
-            <!-- Daftar Berita -->
-            <div class="blog-container" id="blogContainer">
-                <!-- Berita akan dimuat di sini -->
-            </div>
-        </section>
-    </div>
-
-    <!-- Modal Login -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3 style="text-align: center; color: #2c786c; margin-bottom: 20px;">Login Admin</h3>
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" class="form-input" placeholder="Masukkan username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
-            </div>
-            <p id="loginError" class="error-message">Username atau password salah!</p>
-            <button id="loginBtn" class="btn" style="width: 100%;">Login</button>
+    
+    <div class="hero">
+        <img src="logoo.png" width="110px" alt="Asrama Pustaka NIH NWDI Gelogor" class="hero-image">
+        <div class="hero-content">
+            <h1>WELCOME TO ASRAMA PUSTAQKIH NWDI GELOGOR</h1>
+            <p>Pendidikan Islam Terpadu untuk Masa Depan yang Gemilang</p>
         </div>
     </div>
-
-    <script>
-        // Data Contoh Berita - Hanya menyisakan berita ID 1
-        const sampleNews = [
-            {
-                id: 1,
-                title: "Penerimaan Santri Baru Tahun 2024",
-                date: "2025-05-1",
-                category: "pengumuman",
-                image: "ppmb.jpg",
-                excerpt: "Pendaftaran santri baru tahun ajaran 2025/2026 telah dibuka. Daftarkan segera putra/putri Anda.",
-                content: "Asrama Pustakih NWDI Gelogor membuka pendaftaran santri baru untuk tahun ajaran 2025/2026. Pendaftaran gelombang 1 dibuka mulai tanggal 01 April hingga 30 April 2025 Dan Pendaftaran Gelombang 2 Dibuka Mulai Tanggal 15 Mei Sampai 10 Juli 2025. Syarat pendaftaran: 1. Foto Copy SKHU/IJAZAH/SKL SD/MI,SLTP/MTS/PAKET B, 2. Foto Copy PKH/KIP/KIS Jika Ada, 3. Pas foto 3x4 (3 lembar), 4. Foto Copy KK Dan KTP Orang Tua . Untuk informasi lebih lanjut, hubungi nomor ini:087745956857."
-            }
-        ];
-
-        // Credential Admin
-        const ADMIN_CREDENTIALS = {
-            username: "adminpustakih",
-            password: "Gelogor@2024"
-        };
+    
+    <div class="container">
+        <section id="profil" class="section">
+            <h2 class="section-title">Profil Pesantren</h2>
+            <p>ASRAMA PUSTAQKIH NWDI GELOGOR didirikan pada tahun 2014 dengan tujuan mencetak generasi muslim yang berilmu, berakhlak mulia, dan mandiri. Kami menggabungkan pendidikan agama dengan kurikulum nasional untuk menciptakan keseimbangan antara ilmu dunia dan akhirat.</p>
+        </section>
         
-        // Variabel Global
-        let isLoggedIn = false;
-        
-        // Fungsi untuk membersihkan localStorage dari berita ID 2 dan 3
-        function cleanStorageFromDeletedNews() {
-            const storedNews = localStorage.getItem('asramaNews');
-            if (storedNews) {
-                let newsData = JSON.parse(storedNews);
-                newsData = newsData.filter(item => item.id !== 2 && item.id !== 3);
-                localStorage.setItem('asramaNews', JSON.stringify(newsData));
-                return newsData;
-            }
-            return [...sampleNews];
-        }
-        
-        // Inisialisasi data - membersihkan data lama sekaligus
-        let currentNews = cleanStorageFromDeletedNews();
-        
-        // Inisialisasi Elemen
-        const adminPanel = document.getElementById('adminPanel');
-        const blogContainer = document.getElementById('blogContainer');
-        const beritaForm = document.getElementById('beritaForm');
-        const batalBerita = document.getElementById('batalBerita');
-        const adminLoginBtn = document.getElementById('adminLoginBtn');
-        const loginModal = document.getElementById('loginModal');
-        const loginBtn = document.getElementById('loginBtn');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const loginError = document.getElementById('loginError');
-        const closeButtons = document.querySelectorAll('.close');
-        
-        // Fungsi untuk menyimpan ke localStorage
-        function saveNewsToStorage() {
-            localStorage.setItem('asramaNews', JSON.stringify(currentNews));
-        }
-        
-        // Fungsi untuk Render Berita
-        function renderNews() {
-            blogContainer.innerHTML = '';
-            
-            currentNews.forEach(news => {
-                const newsCard = document.createElement('div');
-                newsCard.className = 'blog-card';
-                newsCard.innerHTML = `
-                    <img src="${news.image}" alt="${news.title}" class="blog-image">
-                    <div class="blog-content">
-                        <div class="blog-date">${formatDate(news.date)} • ${formatCategory(news.category)}</div>
-                        <h3 class="blog-title">${news.title}</h3>
-                        <p class="blog-excerpt">${news.excerpt}</p>
-                        <a href="#" class="read-more" data-id="${news.id}">Baca Selengkapnya</a>
-                        ${isLoggedIn ? `<button class="btn-delete" data-id="${news.id}">Hapus</button>` : ''}
+        <section id="program" class="section">
+            <h2 class="section-title">Program Pendidikan</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="tahfidz.jpg" alt="Program Tahfidz">
+                    <div class="card-content">
+                        <h3>Program Tahfidz Al-Qur'an</h3>
+                        <p>Program khusus menghafal Al-Qur'an dengan metode yang efektif dan bimbingan dari Dr.Ustadz Abdul Rasyid Ridho.Ma. yang berpengalaman.</p>
                     </div>
-                `;
-                blogContainer.appendChild(newsCard);
-            });
-        }
-        
-        // Fungsi Format Tanggal
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
-        }
-        
-        // Fungsi Format Kategori
-        function formatCategory(category) {
-            const categories = {
-                'kegiatan': 'Kegiatan',
-                'pengumuman': 'Pengumuman',
-                'prestasi': 'Prestasi',
-                'lainnya': 'Lainnya'
-            };
-            return categories[category] || category;
-        }
-        
-        // Fungsi untuk menangani penghapusan berita
-        function handleDeleteNews(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
-                currentNews = currentNews.filter(item => item.id !== id);
-                saveNewsToStorage();
-                renderNews();
-                alert('Berita berhasil dihapus!');
-            }
-        }
-        
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Data sudah diinisialisasi dengan bersih di atas
-            renderNews();
-            
-            // Login Admin
-            adminLoginBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                loginModal.style.display = 'block';
-            });
-            
-            // Tutup Modal
-            closeButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    loginModal.style.display = 'none';
-                    loginError.style.display = 'none';
-                });
-            });
-            
-            // Klik di luar modal
-            window.addEventListener('click', function(e) {
-                if (e.target === loginModal) {
-                    loginModal.style.display = 'none';
-                    loginError.style.display = 'none';
-                }
-            });
-            
-            // Proses Login
-            loginBtn.addEventListener('click', function() {
-                const username = usernameInput.value.trim();
-                const password = passwordInput.value;
+                </div>
                 
-                if (!username || !password) {
-                    showError('Username dan password harus diisi!');
-                    return;
-                }
-                
-                if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                    isLoggedIn = true;
-                    adminPanel.style.display = 'block';
-                    loginModal.style.display = 'none';
-                    usernameInput.value = '';
-                    passwordInput.value = '';
-                    loginError.style.display = 'none';
-                    renderNews();
-                    alert('Login berhasil! Sekarang Anda dapat mengelola berita.');
-                } else {
-                    showError('Username atau password salah!');
-                    passwordInput.value = '';
-                }
-            });
-            
-            // Form Berita
-            beritaForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const judul = document.getElementById('judulBerita').value;
-                const tanggal = document.getElementById('tanggalBerita').value;
-                const kategori = document.getElementById('kategoriBerita').value;
-                const gambar = document.getElementById('gambarBerita').files[0];
-                const isi = document.getElementById('isiBerita').value;
-                
-                if (!judul || !tanggal || !kategori || !gambar || !isi) {
-                    alert('Harap lengkapi semua field!');
-                    return;
-                }
-                
-                const excerpt = isi.substring(0, 100) + (isi.length > 100 ? '...' : '');
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const newNews = {
-                        id: Date.now(),
-                        title: judul,
-                        date: tanggal,
-                        category: kategori,
-                        image: e.target.result,
-                        excerpt: excerpt,
-                        content: isi
-                    };
-                    
-                    currentNews.unshift(newNews);
-                    saveNewsToStorage();
-                    renderNews();
-                    beritaForm.reset();
-                    alert('Berita berhasil ditambahkan!');
-                };
-                reader.readAsDataURL(gambar);
-            });
-            
-            // Tombol Batal
-            batalBerita.addEventListener('click', function() {
-                beritaForm.reset();
-            });
-            
-            // Event Delegation untuk Baca Selengkapnya dan Hapus
-            blogContainer.addEventListener('click', function(e) {
-                if (e.target.classList.contains('btn-delete')) {
-                    const id = parseInt(e.target.getAttribute('data-id'));
-                    handleDeleteNews(id);
-                }
-                
-                if (e.target.classList.contains('read-more')) {
-                    e.preventDefault();
-                    const id = parseInt(e.target.getAttribute('data-id'));
-                    const newsItem = currentNews.find(item => item.id === id);
-                    
-                    if (newsItem) {
-                        alert(`Detail Berita:\n\nJudul: ${newsItem.title}\nTanggal: ${formatDate(newsItem.date)}\n\n${newsItem.content}`);
-                    }
-                }
-            });
-        });
-        
-        // Fungsi Tampilkan Error
-        function showError(message) {
-            loginError.textContent = message;
-            loginError.style.display = 'block';
-        }
-    </script>
-</body>
-</html>
+                <div class="card">
+                    <img src="Diniyah.JPG" alt="Pendidikan Diniyah">
+                    <div class="card-content">
+                        <h3>Pendidikan Diniyah</h3>
+                        <p>Mempelajari ilmu-ilmu agama Islam secara mendalam meliputi fiqh, hadits, aqidah, akhlak, dan bahasa Arab.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+    <footer id="kontak">
+        <h2>HUBUNGI KAMI</h2>
+<div class="contact-info">
+    <p>ASRAMA PUSTAQKIH NWDI GELOGOR</p>
+    <p>Jl. Tgh Abdul Karim Gelogor Tengah</p>
+    <p>Kabupaten Lombok Barat</p>
+    <p>Telepon: 087745956857</p>
+    <p>Email: pustaqkihn@gmail.com</p>
+</div>
+<p>&copy; 2025 ASRAMA PUSTAQKIH NWDI GELOGOR. Semua Hak Dilindungi.</p>
+

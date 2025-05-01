@@ -140,6 +140,23 @@
             text-decoration: underline;
         }
         
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+            display: block;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+        
         /* Gaya untuk Form Admin */
         .admin-panel {
             background-color: white;
@@ -384,7 +401,7 @@
                 content: "Alhamdulillah, santri kita atas nama Ahmad Fauzi meraih juara 1 Musabaqah Tilawatil Qur'an (MTQ) tingkat Kabupaten Lombok Barat kategori tilawah remaja. Prestasi ini diraih setelah melalui proses seleksi yang ketat selama 3 hari. Ahmad Fauzi adalah santri kelas 2 MA yang telah bergabung di asrama sejak 2 tahun lalu. Beliau akan mewakili kabupaten di MTQ tingkat provinsi bulan depan."
             }
         ];
-
+    
         // Credential Admin
         const ADMIN_CREDENTIALS = {
             username: "adminpustakih",
@@ -422,6 +439,7 @@
                         <h3 class="blog-title">${news.title}</h3>
                         <p class="blog-excerpt">${news.excerpt}</p>
                         <a href="#" class="read-more" data-id="${news.id}">Baca Selengkapnya</a>
+                        ${isLoggedIn ? `<button class="btn-delete" data-id="${news.id}">Hapus</button>` : ''}
                     </div>
                 `;
                 blogContainer.appendChild(newsCard);
@@ -443,6 +461,15 @@
                 'lainnya': 'Lainnya'
             };
             return categories[category] || category;
+        }
+        
+        // Fungsi untuk menangani penghapusan berita
+        function handleDeleteNews(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
+                currentNews = currentNews.filter(item => item.id !== id);
+                renderNews();
+                alert('Berita berhasil dihapus!');
+            }
         }
         
         // Event Listeners
@@ -489,6 +516,7 @@
                     usernameInput.value = '';
                     passwordInput.value = '';
                     loginError.style.display = 'none';
+                    renderNews(); // Render ulang untuk menampilkan tombol hapus
                     alert('Login berhasil! Sekarang Anda dapat mengelola berita.');
                 } else {
                     showError('Username atau password salah!');
@@ -546,15 +574,21 @@
                 beritaForm.reset();
             });
             
-            // Baca Selengkapnya
+            // Event Delegation untuk Baca Selengkapnya dan Hapus
             blogContainer.addEventListener('click', function(e) {
+                // Hapus Berita
+                if (e.target.classList.contains('btn-delete')) {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    handleDeleteNews(id);
+                }
+                
+                // Baca Selengkapnya
                 if (e.target.classList.contains('read-more')) {
                     e.preventDefault();
                     const id = parseInt(e.target.getAttribute('data-id'));
                     const newsItem = currentNews.find(item => item.id === id);
                     
                     if (newsItem) {
-                        // Tampilkan detail berita (bisa dikembangkan menjadi modal atau halaman terpisah)
                         alert(`Detail Berita:\n\nJudul: ${newsItem.title}\nTanggal: ${formatDate(newsItem.date)}\n\n${newsItem.content}`);
                     }
                 }
@@ -567,5 +601,3 @@
             loginError.style.display = 'block';
         }
     </script>
-</body>
-</html>

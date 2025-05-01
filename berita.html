@@ -370,8 +370,8 @@
         </div>
     </div>
 
-    <script>
-        // Data Contoh Berita
+   <script>
+        // Data Contoh Berita - Hanya menyisakan berita ID 1
         const sampleNews = [
             {
                 id: 1,
@@ -381,27 +381,9 @@
                 image: "ppmb.jpg",
                 excerpt: "Pendaftaran santri baru tahun ajaran 2025/2026 telah dibuka. Daftarkan segera putra/putri Anda.",
                 content: "Asrama Pustakih NWDI Gelogor membuka pendaftaran santri baru untuk tahun ajaran 2025/2026. Pendaftaran dibuka mulai tanggal 15 Juni hingga 15 Juli 2024. Syarat pendaftaran: 1. Usia minimal 12 tahun, 2. Fotokopi akte kelahiran, 3. Pas foto 3x4 (2 lembar), 4. Surat rekomendasi dari sekolah sebelumnya. Untuk informasi lebih lanjut, hubungi panitia penerimaan santri baru."
-            },
-            {
-                id: 2,
-                title: "Kegiatan Pesantren Kilat Ramadhan",
-                date: "2024-03-20",
-                category: "kegiatan",
-                image: "berita2.jpg",
-                excerpt: "Pesantren kilat Ramadhan akan dilaksanakan mulai 1 April 2024.",
-                content: "Dalam rangka menyambut bulan suci Ramadhan 1445 H, Asrama Pustakih NWDI Gelogor akan menyelenggarakan Pesantren Kilat Ramadhan mulai tanggal 1 April hingga 10 April 2024. Kegiatan ini terbuka untuk santri dan masyarakat umum. Materi yang akan diajarkan meliputi: 1. Fiqh Puasa, 2. Tadarus Al-Qur'an, 3. Kajian Kitab Kuning, 4. Pembinaan Akhlak. Pendaftaran gratis dan tempat terbatas."
-            },
-            {
-                id: 3,
-                title: "Santri Asrama Juara MTQ Tingkat Kabupaten",
-                date: "2024-05-10",
-                category: "prestasi",
-                image: "berita3.jpg",
-                excerpt: "Santri kita meraih juara 1 MTQ tingkat Kabupaten Lombok Barat.",
-                content: "Alhamdulillah, santri kita atas nama Ahmad Fauzi meraih juara 1 Musabaqah Tilawatil Qur'an (MTQ) tingkat Kabupaten Lombok Barat kategori tilawah remaja. Prestasi ini diraih setelah melalui proses seleksi yang ketat selama 3 hari. Ahmad Fauzi adalah santri kelas 2 MA yang telah bergabung di asrama sejak 2 tahun lalu. Beliau akan mewakili kabupaten di MTQ tingkat provinsi bulan depan."
             }
         ];
-    
+
         // Credential Admin
         const ADMIN_CREDENTIALS = {
             username: "adminpustakih",
@@ -410,7 +392,21 @@
         
         // Variabel Global
         let isLoggedIn = false;
-        let currentNews = JSON.parse(localStorage.getItem('asramaNews')) || [...sampleNews];
+        
+        // Fungsi untuk membersihkan localStorage dari berita ID 2 dan 3
+        function cleanStorageFromDeletedNews() {
+            const storedNews = localStorage.getItem('asramaNews');
+            if (storedNews) {
+                let newsData = JSON.parse(storedNews);
+                newsData = newsData.filter(item => item.id !== 2 && item.id !== 3);
+                localStorage.setItem('asramaNews', JSON.stringify(newsData));
+                return newsData;
+            }
+            return [...sampleNews];
+        }
+        
+        // Inisialisasi data - membersihkan data lama sekaligus
+        let currentNews = cleanStorageFromDeletedNews();
         
         // Inisialisasi Elemen
         const adminPanel = document.getElementById('adminPanel');
@@ -480,12 +476,7 @@
         
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Load data dari localStorage jika ada
-            const storedNews = localStorage.getItem('asramaNews');
-            if (storedNews) {
-                currentNews = JSON.parse(storedNews);
-            }
-            
+            // Data sudah diinisialisasi dengan bersih di atas
             renderNews();
             
             // Login Admin
@@ -603,3 +594,5 @@
             loginError.style.display = 'block';
         }
     </script>
+</body>
+</html>
